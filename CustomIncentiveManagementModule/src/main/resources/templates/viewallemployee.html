@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  	
+  	<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+  </head>
+  <body>
+  <div class="employeedetails">
+	   <h2>ALL Eployee Details</h2><br><br>
+ 	<div class= "container">
+ 	
+ 	<form action="/admin/addemployee" method="get">
+    <button onclick="loginadd('addnewemployee')">add new employee</button> 
+    </form>
+    
+    </div>
+   <!--   <script>
+    	function loginadd(userType) {
+    		if(userType === 'addnewEmployee') {
+    			window.location.href='/admin/addemployee';
+    		}
+    	}
+    </script>--><br><br>
+	   <table  class="teble table-bordered"  >
+	   <thead>
+	   		<tr>
+	   			<th>id</th>
+	   			<th>NAME</th>
+	   			<th>age</th>
+	   			<th>joining</th>
+	   			<th>exitcompany</th>
+	   			<th>salesTertory</th>
+	   			<th>Address</th>
+	   			<th>Experience</th>
+	   			<th>gender</th>
+	   			<th>target</th>
+	   			<th>incentivePercentage (%)</th>
+	   			<th>bonus</th>
+	   			<th>holidayPackageEligibility<th>
+	   			<th>email</th>
+	   			<th>manupulate data</th>
+	   		</tr>
+	   	</thead>
+	   	<tbody>
+	   		<tr th:each="dt : ${mesg}">
+	   			<td th:text="${dt.id}"></td>	
+	   			<td th:text="${dt.name}"></td>
+	   			<td th:text="${dt.age}"></td>	
+	   			<td th:text="${dt.joining}"></td>
+	   			<td th:text="${dt.exitcompany}"></td>
+	   			<td th:text="${dt.salesTertory}"></td>
+	   			<td th:text="${dt.Address}"></td>
+	   			<td th:text="${dt.Experience}"></td>
+	   			<td th:text="${dt.gender}"></td>
+	   			<td th:text="${dt.target}"></td>
+	   	   		<td th:text="${dt.incentivePercentage}"></td>
+	   			<td th:text="${dt.bonus}"></td>
+	   			<td th:text="${dt.holidayPackageEligibility}"></td>
+	   			<td th:text="${dt.email}"></td>
+	   			<td>
+	   				<a th:href="@{/admin/updateemployee/{id}(id=${employee.id})}" class="btn btn-primary">Update</a>
+                	<a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger">Delete</a>
+	   			</td>
+	   		</tr>
+	   	</tbody>
+	   		
+	   </table>
+	  
+	 </form><br><br>
+	 <button onclick="logout()">GO to Dashboard</button>
+    
+    <script>
+        function logout() {
+            window.location.href = '/admin/admindashboard';
+        }
+    </script>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin login page</title>
+</head>
+<body>
+	
+    <h2>Admin Login</h2>
+    <font color="red">
+    <p  th:text="${mesg}">
+    </font>
+    <form id="loginForm" action="admin/login" method="post" th:object=${admin}>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="email" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="AdminPassword" required><br><br>
+        <input type="submit" value="login" ></input>
+    </form>
+</body>
+</html>

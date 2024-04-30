@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>incentive customer management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+ 	
+ 	<style>
+        /* CSS for centering the table */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Adjust this value based on your requirements */
+        }
+        
+        /* Optional styling for the table */
+        table {
+            border-collapse: collapse;
+            width: 80%; /* Adjust the width of the table */
+        }
+        
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+ 
+  </head>
+  <body >
+   
+    <h2>register page</h2>
+    <font color="red">
+    <p  th:text="${mesg}">
+    </font>
+   
+    <form id="loginForm" action="/admin/addemployee" method="post" th:object=${emp}  >
+    	
+    	<table style="width:100%" >
+    		<tr>
+    		<td>
+    			<label for="name">Name                    :-</label>
+        		<input type="text" id="name" name="name" required><br>
+    			</td>
+    		
+    			<td>
+        		<label for="age">AGE                      :-</label>
+        		<input type="text" id="age" name="age" required><br>
+        		</td>
+    		
+    			<td>
+    			<label for="joining">DATE OF JOINING  :-</label>
+        		<input type="datetime-local" id="joining" name="joining"  ><br>
+        		</td>
+        	
+    			<td><label for="gender">GENDER            :-</label>
+        		<input type="text" id="gender" name="gender" required><br>
+        		</td>
+       			
+       			<td>
+        		<label for="salesTertory">salesTertory:-  </label>
+        		<input type="text" id="salesTertory" name="salesTertory" required><br>
+        		</td>
+        		
+       			<td>
+          		<label for="Address">ADDRESS          :-</label>
+        		<input type="text" id="Address" name="Address" required><br><br>
+        		</td>
+        		
+        		<td>
+          		<label for="Experience">EXPERIENCE     :-</label>
+        		<input type="text" id="Experience" name="Experience" required><br><br>
+        		</td>
+        		
+        		<td>
+          		<label for="target">Target			   :- </label>
+        		<input type="text" id="target" name="target" required><br><br>
+    	  		</td>
+    	  		
+    	  		<td>
+         		<label for="email">Email                :- </label>
+        		<input type="text" id="email" name="email" required><br><br>
+        		</td>
+        		
+        		<td>
+        		<label for="password">Password           :-</label>
+        		<input type="text" id="password" name="password" required><br><br>
+        		</td>
+        	
+        	</tr>
+        </table>
+        
+        <input type="submit" value="Submit" ></input>
+    </form>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
