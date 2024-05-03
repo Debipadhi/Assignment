@@ -8,5 +8,7 @@ public interface EmployeeService {
 	public EmployeeDetails getEmployeeDetails(Integer id);
 	public String isHolidaypkg(Integer id);
 	public EmployeeDetails checklogin(String email,String password,Integer id);
+	public EmployeeDetails getEmployeeDetailsByEmail(String email);
+	public boolean recoverpassword(String email);
 
 }

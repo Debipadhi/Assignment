@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hyscalar.cimm.utill.EmailUtils;
 import com.hyscaler.cimm.Entity.AdminDetails;
 import com.hyscaler.cimm.Entity.EmployeeDetails;
 import com.hyscaler.cimm.Entity.HolidayPackage;
@@ -29,46 +30,48 @@ public class AdminserviceIMPL implements AdminService {
 	// repository for admindetails
 	@Autowired
 	private AdminDetailsRepo adminrepo;
-
+	
+	@Autowired
+	private EmailUtils emailutils;
 
 	@Override
 	public String addEmployee(EmployeeDetails employee) {
-		
+
 		EmployeeDetails empdata = employee;
-		
-		if(employee.getTarget() < 10000) {
+
+		if (employee.getTarget() < 10000) {
 			empdata.setIncentivePercentage("0");
 			empdata.setBonus("0");
 			empdata.setHolidayPackageEligibility("no");
 			EmployeeDetails emp = employeerepo.save(empdata);
-			return emp.getId()+"add sucessfully";
-			
-		}else if(employee.getTarget() >= 10000 && employee.getTarget() < 20000) {
+			return emp.getId() + "add sucessfully";
+
+		} else if (employee.getTarget() >= 10000 && employee.getTarget() < 20000) {
 			empdata.setIncentivePercentage("1.5");
 			empdata.setBonus("0");
 			empdata.setHolidayPackageEligibility("no");
 			EmployeeDetails emp = employeerepo.save(empdata);
-			return emp.getId()+"add sucessfully";
-			
-		}else if(employee.getTarget() >= 20000 && employee.getTarget() < 30000) {
+			return emp.getId() + "add sucessfully";
+
+		} else if (employee.getTarget() >= 20000 && employee.getTarget() < 30000) {
 			empdata.setIncentivePercentage("3");
 			empdata.setBonus("none");
 			empdata.setHolidayPackageEligibility("no");
 			EmployeeDetails emp = employeerepo.save(empdata);
-			return emp.getId()+"add sucessfully";
-			
-		}else if(employee.getTarget() >= 30000 && employee.getTarget() < 50000) {
+			return emp.getId() + "add sucessfully";
+
+		} else if (employee.getTarget() >= 30000 && employee.getTarget() < 50000) {
 			empdata.setIncentivePercentage("3.5");
 			empdata.setBonus("$1000");
 			empdata.setHolidayPackageEligibility("no");
 			EmployeeDetails emp = employeerepo.save(empdata);
-			return emp.getId()+"add sucessfully";
-		}else if(employee.getTarget() >= 50000) {
+			return emp.getId() + "add sucessfully";
+		} else if (employee.getTarget() >= 50000) {
 			empdata.setIncentivePercentage("5.5");
 			empdata.setBonus("None");
 			empdata.setHolidayPackageEligibility("yes");
 			EmployeeDetails emp = employeerepo.save(empdata);
-			return emp.getId()+"add sucessfully";
+			return emp.getId() + "add sucessfully";
 		}
 
 		return "your data can not added properly";
@@ -78,17 +81,51 @@ public class AdminserviceIMPL implements AdminService {
 	public String updateEmployeeById(Integer id, EmployeeDetails employee) {
 
 		if (employeerepo.existsById(id)) {
-			employeerepo.save(employee);
-			return id + "this id  record  updated successfully";
+			EmployeeDetails empdata = employee;
+
+			if (employee.getTarget() < 10000) {
+				empdata.setIncentivePercentage("0");
+				empdata.setBonus("0");
+				empdata.setHolidayPackageEligibility("no");
+				EmployeeDetails emp = employeerepo.save(empdata);
+				return emp.getId() + "update sucessfully";
+
+			} else if (employee.getTarget() >= 10000 && employee.getTarget() < 20000) {
+				empdata.setIncentivePercentage("1.5");
+				empdata.setBonus("0");
+				empdata.setHolidayPackageEligibility("no");
+				EmployeeDetails emp = employeerepo.save(empdata);
+				return emp.getId() + "update sucessfully";
+
+			} else if (employee.getTarget() >= 20000 && employee.getTarget() < 30000) {
+				empdata.setIncentivePercentage("3");
+				empdata.setBonus("none");
+				empdata.setHolidayPackageEligibility("no");
+				EmployeeDetails emp = employeerepo.save(empdata);
+				return emp.getId() + "update sucessfully";
+
+			} else if (employee.getTarget() >= 30000 && employee.getTarget() < 50000) {
+				empdata.setIncentivePercentage("3.5");
+				empdata.setBonus("$1000");
+				empdata.setHolidayPackageEligibility("no");
+				EmployeeDetails emp = employeerepo.save(empdata);
+				return emp.getId() + "add sucessfully";
+			} else if (employee.getTarget() >= 50000) {
+				empdata.setIncentivePercentage("5.5");
+				empdata.setBonus("None");
+				empdata.setHolidayPackageEligibility("yes");
+				EmployeeDetails emp = employeerepo.save(empdata);
+				return emp.getId() + "update sucessfully";
+			}
 		}
 
 		return id + "this id  record is not exit";
 	}
 
 	@Override
-	public void deleteEmployee(Integer employeeId) {
+	public String deleteEmployee(Integer employeeId) {
 		employeerepo.deleteById(employeeId);
-
+		return employeeId + " Employee has deleted successfylly";
 	}
 
 	@Override
@@ -114,10 +151,7 @@ public class AdminserviceIMPL implements AdminService {
 		return employeelist;
 
 	}
-	
-	
-	
-	
+
 	// holiday manupulation get start
 
 	@Override
@@ -168,12 +202,8 @@ public class AdminserviceIMPL implements AdminService {
 		return holidaylist;
 	}
 
-	
-	
-	
-	
 	// from this onword admin operation
-	
+
 	@Override
 	public AdminDetails getAdminDetailsById(Integer id) {
 
@@ -204,13 +234,36 @@ public class AdminserviceIMPL implements AdminService {
 
 	@Override
 	public AdminDetails checklogin(String email, String password) {
-		
-		AdminDetails admindetails =	adminrepo.findByEmail(email);
-		
-		if(admindetails.getEmail().equals(email) && admindetails.getAdminPassword().equals(password)) {
+
+		AdminDetails admindetails = adminrepo.findByEmail(email);
+
+		if (admindetails.getEmail().equals(email) && admindetails.getAdminPassword().equals(password)) {
 			return admindetails;
 		}
 		return null;
+	}
+
+	@Override
+	public AdminDetails getAdminDetailsByEmail(String email) {
+
+		AdminDetails admin = adminrepo.findByEmail(email);
+
+		return admin;
+	}
+
+	@Override
+	public boolean recoverpassword(String email) {
+		AdminDetails admin =adminrepo .findByEmail(email);
+
+		if (admin.getId() == null) {
+			return false;
+		}
+
+		String subject = "Recover Password - employee MR. " + admin.getAdminName();
+		String body = "<h1>id:- " + admin.getId() + "<h1>Your Passvord :- " + admin.getAdminPassword() + "</h1>";
+
+		return emailutils.sendEmail(subject, body, email);
+		
 	}
 
 }

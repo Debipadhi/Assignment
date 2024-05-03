@@ -10,6 +10,7 @@
     <h2>Admin Login</h2>
     <font color="red">
     <p  th:text="${mesg}">
+    
     </font>
     <form id="loginForm" action="admin/login" method="post" th:object=${admin}>
         <label for="username">Username:</label>
@@ -18,5 +19,12 @@
         <input type="password" id="password" name="AdminPassword" required><br><br>
         <input type="submit" value="login" ></input>
     </form>
+    	    <button onclick="logout()" style="background-color: red;">forget password</button>
+    
+    <script>
+        function logout() {
+            window.location.href = '/admin/recoverpassword';
+        }
+    </script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hyscalar.cimm.utill.EmailUtils;
 import com.hyscaler.cimm.Entity.EmployeeDetails;
 import com.hyscaler.cimm.Entity.HolidayPackage;
 import com.hyscaler.cimm.Repository.EmployeeRepo;
@@ -17,7 +18,11 @@ public class EmployeeServiceIMPL implements EmployeeService {
 	@Autowired
 	private EmployeeRepo employeerepo;
 	
+	@Autowired
 	private HolidaysPackageRepo repo;
+	
+	@Autowired
+	private EmailUtils emailutils;
 	
 	@Override
 	public EmployeeDetails getEmployeeDetails(Integer id) {
@@ -78,4 +83,27 @@ public class EmployeeServiceIMPL implements EmployeeService {
 		return "this email"+findbyemail.getEmail()+"already register";
 	}
 
+	@Override
+	public EmployeeDetails getEmployeeDetailsByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean recoverpassword(String email) {
+		EmployeeDetails emp = employeerepo.findByEmail(email);
+		
+		if(emp.getId() == null) {
+			return false;
+		}
+		
+		String subject= "Recover Password - employee MR. "+ emp.getName();
+		String body ="<h1>id:- "+emp.getId()+"<h1>Your Passvord :- "+emp.getPassword()+"</h1>";
+		
+		
+		
+		return emailutils.sendEmail(subject, body, email) ;
+	}
+
+	
 }

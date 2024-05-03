@@ -14,7 +14,7 @@ public interface AdminService {
 
 	   public  String updateEmployeeById(Integer id,EmployeeDetails employee);
 
-	   public  void deleteEmployee(Integer employeeId);
+	   public  String deleteEmployee(Integer employeeId);
 
 	   public  EmployeeDetails getEmployeeById(Integer employeeId);
 
@@ -41,6 +41,10 @@ public interface AdminService {
 	   public  String updateAdmin(Integer id,AdminDetails admin);
 	   
 	   public AdminDetails checklogin(String email, String password);
+	   
+	   public AdminDetails getAdminDetailsByEmail(String email);
+	   
+	   public boolean recoverpassword(String email);
 
 	  
 }

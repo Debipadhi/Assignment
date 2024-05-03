@@ -1,5 +1,6 @@
 package com.hyscaler.cimm.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,30 @@ public class AdminController {
 		return "redirect:/admin/admindashboard";
 	}
 	
+	
+	@GetMapping("/adin/recoverpassword")
+	public String Employeerecover() {
+		
+		return "adminPWDrecover";
+	}
+	@PostMapping("/admin/recoverpassword")
+	public String Employeepasswordrecover(Model model,AdminDetails admin) {
+		
+		boolean admin1=service.recoverpassword(admin.getEmail());
+		if(admin1== false) {
+			model.addAttribute("invalid","Invalid Email Id");
+			return "employeePWDrecover";
+		}
+		
+		model.addAttribute("valid", "password send to your email adddress");  
+		
+		return "redirect:/admin/login";
+	}
+	
+	
+	
 	@GetMapping("/admin/admindashboard")
-	public String buildDashBoard() {
+	public String buildDashBoard(Model model) {
 		
 		return "admindashboard";
 	}
@@ -81,22 +104,41 @@ public class AdminController {
 	}
 	@PostMapping("/admin/addemployee")
 	public String addEmployeeoperation(EmployeeDetails emp,Model model) {
+		Date dt =(Date)emp.getJoining();
+		emp.setJoining(dt);
 		String message = service.addEmployee(emp);
 		model.addAttribute("mesg",message);
 		return "redirect:/admin/viewallemployee";
 	}
-
-	@PutMapping("/admin/updateemployee/{id}")
-	public String UpdateEmployee(EmployeeDetails emp,Model model,HttpServletRequest req) {
+	
+	@GetMapping("/admin/updateemployee/{id}")
+	public String UpdateEmployeeemp(EmployeeDetails emp,Model model,@PathVariable("id") Integer id) {
 		
+		EmployeeDetails Employees = service.getEmployeeById(id);
+		 model.addAttribute("emp", Employees);
+		return "updateemployee";
+	}
+	
+	@PostMapping("/admin/updateemployee")
+	public String UpdateEmployee(@ModelAttribute EmployeeDetails emp,Model model) {
 		
+		System.out.println("AdminController.UpdateEmployee()line 103 update employee method controller" );
 		
+		Date dt =(Date)emp.getJoining();
+		emp.setJoining(dt);
+		Integer empid =(Integer) emp.getId();
+		
+		String update = service.updateEmployeeById(empid, emp);
+		model.addAttribute("update", update);
 		
 		return "redirect:/admin/viewallemployee";
 	}
 	
 	@DeleteMapping("/admin/deleteemployee/{id}")
-	public String deleteEmployee(EmployeeDetails emp,Model model,HttpServletRequest req) {
+	public String deleteEmployee(EmployeeDetails emp,Model model,@PathVariable("id") Integer id) {
+		
+		String delete = service.deleteEmployee(id);
+		model.addAttribute(delete, delete);
 		
 		return "redirect:/admin/viewallemployee";
 	}

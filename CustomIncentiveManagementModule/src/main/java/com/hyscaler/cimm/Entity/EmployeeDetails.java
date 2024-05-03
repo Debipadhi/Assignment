@@ -23,6 +23,7 @@ public class EmployeeDetails {
 	private String  name;
 	private Integer age;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date    joining;
 	private Date    exitcompany;
 	

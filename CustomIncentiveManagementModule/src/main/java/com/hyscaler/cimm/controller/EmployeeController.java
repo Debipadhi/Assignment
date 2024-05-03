@@ -30,7 +30,7 @@ public class EmployeeController {
 		return "employeelogin";
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/employee/login")
 	public String hendellogin(EmployeeDetails emp, Model model, HttpServletRequest req) {
 		EmployeeDetails admincheck = service.checklogin(emp.getEmail(),emp.getPassword(),emp.getId()); 
 		
@@ -42,7 +42,7 @@ public class EmployeeController {
 		
 		HttpSession session  = req.getSession(true);
 		session.setAttribute("id", emp.getId());
-		return "redirect:employeedashboard";
+		return "redirect:/employeedashboard";
 	}
 	
 	@GetMapping("/employeedashboard")
@@ -56,5 +56,23 @@ public class EmployeeController {
 		model.addAttribute("EmployeeDetails",employeedeails );
 		
 		return "employeedashboard";
+	}
+	
+	@GetMapping("/employee/recoverpassword")
+	public String Employeerecover() {
+		
+		return "employeePWDrecover";
+	}
+	@PostMapping("/employee/recoverpassword")
+	public String Employeepasswordrecover(Model model,EmployeeDetails emp) {
+	
+		boolean emp1=service.recoverpassword(emp.getEmail());
+		if(emp1== false) {
+			model.addAttribute("invalid","Invalid Email Id");
+			return "employeePWDrecover";
+		}
+		
+		model.addAttribute("valid", "password send to your email adddress");   
+		return "redirect:/employee/login";
 	}
 }
